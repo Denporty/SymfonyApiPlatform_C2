@@ -68,3 +68,50 @@ php bin/console lexik:jwt:generate-keypair
   ```
 - retourne un token 
 - .../api/tasks (ou autres routes protect par jwt) method GET/POST/PUT/DELETE etc... ajouter dans le header (key : Authorization, value : Bearer <JWT_TOKEN_GENERATE> 
+
+### GraphiQL Example
+
+```
+query getAllTasks{
+  tasks
+    {
+      edges 
+      {
+        node 
+        {
+          title,
+      		description,
+      		done,
+          id,
+          _id
+        }
+      } 
+    }
+}
+
+mutation DeleteTask($id: ID!) {
+  deleteTask(input: {id: $id} ) {
+    clientMutationId
+  }
+}
+
+mutation CreateTask($title: String!, $description: String!, $done: Boolean!) {
+  createTask(input: {title: $title, description: $description, done: $done} ) {
+    task {
+      title,
+      description,
+      done
+    }
+  }
+}
+
+mutation UpdateTask($id: ID!, $title: String!, $description: String!, $done: Boolean!) {
+  updateTask(input: {id: $id, title: $title, description: $description, done: $done} ) {
+    task {
+      title,
+      description,
+      done
+    }
+  }
+}
+```
